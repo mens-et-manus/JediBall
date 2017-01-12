@@ -82,6 +82,21 @@ ModelImporter:
     4300024: polySurface2_vader:Inst3D_polySurface4
     4300026: polySurface3_polySurface2_vader:Inst3D
     4300028: polySurface9
+    6400000: polySurface22
+    6400002: polySurface26
+    6400004: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface14_polySurface16_polySurface18
+    6400006: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface14_polySurface16_polySurface19
+    6400008: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface14_polySurface16_polySurface20
+    6400010: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface14_polySurface16_polySurface23
+    6400012: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface14_polySurface16_polySurface24
+    6400014: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface14_polySurface16_polySurface25
+    6400016: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface14_polySurface17_polySurface16
+    6400018: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface12_polySurface15_polySurface14
+    6400020: polySurface2_vader:Inst3D_polySurface10_polySurface5_polySurface13_polySurface12
+    6400022: polySurface2_vader:Inst3D_polySurface11_polySurface10_polySurface5
+    6400024: polySurface2_vader:Inst3D_polySurface4
+    6400026: polySurface3_polySurface2_vader:Inst3D
+    6400028: polySurface9
   materials:
     importMaterials: 1
     materialName: 0
@@ -108,7 +123,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
