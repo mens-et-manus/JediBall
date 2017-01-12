@@ -29,6 +29,12 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
+	public void win()
+	{
+		startText.text = "You Win!";
+		restartButton.gameObject.SetActive (true);
+	}
+
 	public void gameStart()
 	{
 		rb.velocity = new Vector3 (0, 0, 10);
@@ -51,10 +57,12 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) 
 	{
-		if (other.gameObject.CompareTag("Respawn")) {
+		if (other.gameObject.CompareTag ("Respawn")) {
 			gameOverText.text = "Game Over!";
 			restartButton.gameObject.SetActive (true);
 			//Restart();
+		} else if (other.gameObject.CompareTag ("Finish")) {
+			win ();
 		}
 	}
 
