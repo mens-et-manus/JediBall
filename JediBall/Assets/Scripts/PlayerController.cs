@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+	public GameObject Pins; // Pins object for scoring
+
 	public float speed;
 
 	private Rigidbody rb;
@@ -29,9 +31,24 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
+	// count how many pins are down
+	public int CheckPins()
+	{
+		int nStand = 0;
+		//See https://docs.unity3d.com/ScriptReference/Transform.html
+		foreach (Transform child in Pins.transform) {
+			//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
+			if (Mathf.Abs (Vector3.Dot (child.up, Vector3.up)) > 0.70f) {
+				nStand += 1;
+			}
+		}
+		return Pins.transform.childCount - nStand;
+	}
+
 	public void win()
 	{
-		startText.text = "You Win!";
+		int nPin = CheckPins (); // count pins
+		startText.text = "Down: " + nPin.ToString();
 		restartButton.gameObject.SetActive (true);
 	}
 
@@ -52,6 +69,10 @@ public class PlayerController : MonoBehaviour {
 			Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 
 			rb.AddForce (movement * speed);
+		}
+
+		if (Input.GetKey (KeyCode.Escape)) { // quit application when ESC typed
+			Application.Quit ();
 		}
 	}
 
