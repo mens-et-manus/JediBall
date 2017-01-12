@@ -46,25 +46,35 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate ()
 	{
 		if (active) {
-			float moveHorizontal = Input.GetAxis ("Horizontal");
+            if (rb.position.y <= -5.0)
+            {
+                gameOverText.text = "Game Over!";
+                restartButton.gameObject.SetActive(true);
+            }
+
+            float moveHorizontal = Input.GetAxis ("Horizontal");
 			float moveVertical = Input.GetAxis ("Vertical");
 
-			Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+            Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 
 			rb.AddForce (movement * speed);
 		}
 	}
 
-	void OnTriggerEnter(Collider other) 
-	{
-		if (other.gameObject.CompareTag ("Respawn")) {
-			gameOverText.text = "Game Over!";
-			restartButton.gameObject.SetActive (true);
-			//Restart();
-		} else if (other.gameObject.CompareTag ("Finish")) {
-			win ();
-		}
-	}
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            win();
+        }
+        //if (other.gameObject.CompareTag ("Respawn")) {
+        //	gameOverText.text = "Game Over!";
+        //	restartButton.gameObject.SetActive (true);
+        //	//Restart();
+        //} else if (other.gameObject.CompareTag ("Finish")) {
+        //	win ();
+        //}
+    }
 
     public void Restart()
     {
