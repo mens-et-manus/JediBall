@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-    void Restart()
+    public void Restart()
     {
 		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex); 
     }
