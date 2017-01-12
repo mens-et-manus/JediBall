@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void gameStart()
 	{
-		rb.velocity = new Vector3 (0, 0, 10);
+		rb.velocity = new Vector3 (0, 0, 15);
 		startButton.gameObject.SetActive (false);
 		startText.text = "";
 		active = true;
