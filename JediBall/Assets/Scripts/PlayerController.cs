@@ -10,32 +10,50 @@ public class PlayerController : MonoBehaviour {
 
 	public int count;
 
-	public Text gameOver;
+	public Text gameOverText;
 
-	public Button restart;
+	public Text startText;
+
+	public Button restartButton;
+
+	public Button startButton;
+
+	private bool active = false;
 
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
-		gameOver.text = "";
-		restart.gameObject.SetActive (false);
+		startText.text = "Welcome to JediBall!";
+		gameOverText.text = "";
+		restartButton.gameObject.SetActive (false);
+
+	}
+
+	public void gameStart()
+	{
+		rb.velocity = new Vector3 (0, 0, 10);
+		startButton.gameObject.SetActive (false);
+		startText.text = "";
+		active = true;
 	}
 
 	void FixedUpdate ()
 	{
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
+		if (active) {
+			float moveHorizontal = Input.GetAxis ("Horizontal");
+			float moveVertical = Input.GetAxis ("Vertical");
 
-		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+			Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 
-		rb.AddForce (movement * speed);
+			rb.AddForce (movement * speed);
+		}
 	}
 
 	void OnTriggerEnter(Collider other) 
 	{
 		if (other.gameObject.CompareTag("Respawn")) {
-			gameOver.text = "Game Over!";
-			restart.gameObject.SetActive (true);
+			gameOverText.text = "Game Over!";
+			restartButton.gameObject.SetActive (true);
 			//Restart();
 		}
 	}
