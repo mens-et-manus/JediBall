@@ -67,13 +67,6 @@ public class PlayerController : MonoBehaviour {
         {
             win();
         }
-        //if (other.gameObject.CompareTag ("Respawn")) {
-        //	gameOverText.text = "Game Over!";
-        //	restartButton.gameObject.SetActive (true);
-        //	//Restart();
-        //} else if (other.gameObject.CompareTag ("Finish")) {
-        //	win ();
-        //}
     }
 
     public void Restart()
