@@ -35,15 +35,15 @@ public class PlayerController : MonoBehaviour {
 	// count how many pins are down
 	public int CheckPins()
 	{
-		int nStand = 0;
+		int nDown = 0; // number of lay downs
 		//See https://docs.unity3d.com/ScriptReference/Transform.html
 		foreach (Transform child in Pins.transform) {
 			//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
-			if (Mathf.Abs (Vector3.Dot (child.up, Vector3.up)) > 0.80f) {
-				nStand += 1;
+			if (Vector3.Dot (child.up, Vector3.up) < 0.90f) {
+				nDown += 1;
 			}
 		}
-		return Pins.transform.childCount - nStand;
+		return nDown;
 	}
 
 	public void win()
