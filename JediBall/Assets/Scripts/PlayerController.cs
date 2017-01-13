@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour {
 		startText.text = "Welcome to JediBall!";
 		gameOverText.text = "";
 		restartButton.gameObject.SetActive (false);
-
+		// Call Reset of Pins' script: https://forum.unity3d.com/threads/calling-function-from-other-scripts-c.57072/
+		Pins.GetComponent<PinController> ().Reset();
 	}
 
 	// count how many pins are down
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour {
 		//See https://docs.unity3d.com/ScriptReference/Transform.html
 		foreach (Transform child in Pins.transform) {
 			//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
-			if (Mathf.Abs (Vector3.Dot (child.up, Vector3.up)) > 0.70f) {
+			if (Mathf.Abs (Vector3.Dot (child.up, Vector3.up)) > 0.80f) {
 				nStand += 1;
 			}
 		}
@@ -73,6 +74,9 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.Escape)) { // quit application when ESC typed
 			Application.Quit ();
+		}
+		if (Input.GetKey (KeyCode.P)) {
+			Pins.GetComponent<PinController> ().Reset();
 		}
 	}
 
