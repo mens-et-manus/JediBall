@@ -33,5 +33,19 @@ public class PinController : MonoBehaviour {
 			}
 		}
 	}
+
+	// count how many pins are down
+	public int CheckPins()
+	{
+		int nDown = 0;
+		//See https://docs.unity3d.com/ScriptReference/Transform.html
+		foreach (Transform child in transform) {
+			//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
+			if (Vector3.Dot (child.up, Vector3.up) < 0.999f) {
+				nDown += 1;
+			}
+		}
+		return nDown;
+	}
 	
 }
