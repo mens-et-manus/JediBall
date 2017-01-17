@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour {
 
 	private float TheForceTranslationX; // force on ball by kinect object
 
+	public GameObject player; 
+
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -70,6 +72,8 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
+		OSCConnection lr = player.GetComponent<OSCConnection> ();
+		float horizontal = lr.acc2;
 		if (active) {
 			if (rb.position.y <= -5.0 && !won) // game over if ball falls below a certain height
 			{
@@ -78,8 +82,14 @@ public class PlayerController : MonoBehaviour {
 			}
 			float moveHorizontal = Input.GetAxis ("Horizontal");
 			float moveVertical = Input.GetAxis ("Vertical");
+			if (horizontal > 150 | horizontal < -150) {
+				
+				horizontal = horizontal / 700;
+			} else {
+				horizontal = 0;
+			}
 
-			Vector3 movement = new Vector3 ((moveHorizontal + TheForceTranslationX), 0.0f, (moveVertical + 1f));
+			Vector3 movement = new Vector3 ((moveHorizontal + TheForceTranslationX + horizontal), 0.0f, (moveVertical + 1f));
 
 			rb.AddForce (movement * speed);
 		}
