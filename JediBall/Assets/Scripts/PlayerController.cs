@@ -6,13 +6,15 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject Pins; // Pins object for scoring
 
+	public GameObject player; // for retrieving values from Muse
+
 	public float speed;
 
 	private Rigidbody rb;
 
 	public Text gameOverText;
 
-	public Text startText;
+	public Text startText, alphaText, betaText, connectionText;
 
 	public Button restartButton;
 
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour {
 	private bool active = false; // whether ball is active or not
 
 	private bool won = false; // whether player has won
+
+	public bool useAlpha = true; // use alpha or beta waves
 
 	public Rigidbody kinectObject; // object controlled by kinect
 
@@ -70,6 +74,21 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
+		OSCConnection osc = player.GetComponent<OSCConnection> ();
+		float horizontal = osc.acc2; // control left and right using gyroscope
+		float alpha_forward = osc.alpha; // alpha relative value
+		float beta_forward = osc.beta; // beta relative value
+		float blink = osc.blink * 5; 
+		string inUse = " (in use)";
+		alphaText.text = useAlpha ? "Alpha: " + alpha_forward + inUse : "Alpha: " + alpha_forward;
+		betaText.text = useAlpha ? "Beta: " + beta_forward : "Beta: " + beta_forward + inUse;
+		float connection = osc.conn;
+		if (connection > 2)
+			connectionText.text = "Connection Status: Good";
+		else if (connection == 2)
+			connectionText.text = "Connection Status: OK";
+		else
+			connectionText.text = "Connection Status: Bad";
 		if (active) {
 			if (rb.position.y <= -5.0 && !won) // game over if ball falls below a certain height
 			{
@@ -78,9 +97,21 @@ public class PlayerController : MonoBehaviour {
 			}
 			float moveHorizontal = Input.GetAxis ("Horizontal");
 			float moveVertical = Input.GetAxis ("Vertical");
+			if (horizontal > 150 | horizontal < -150) { // threshold for left and right movement
+				//				horizontal = 0;
+				horizontal = horizontal / 700;
+			} else {
+				horizontal = 0;
+			}
+			float forward = 0;
 
-			Vector3 movement = new Vector3 ((moveHorizontal + TheForceTranslationX), 0.0f, (moveVertical + 1f));
+			if (useAlpha) {
+				forward = alpha_forward * 2;
+			} else {
+				forward = beta_forward * 2;
+			}
 
+			Vector3 movement = new Vector3 ((moveHorizontal + TheForceTranslationX + horizontal), 0.0f, (moveVertical + forward));
 			rb.AddForce (movement * speed);
 		}
 
