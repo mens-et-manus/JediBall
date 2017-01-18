@@ -90,10 +90,9 @@ public class PlayerController : MonoBehaviour {
 		else
 			connectionText.text = "Connection Status: Bad";
 		if (active) {
-			if (rb.position.y <= -5.0 && !won) // game over if ball falls below a certain height
-			{
+			if (rb.position.y <= -5.0 && !won) { // game over if ball falls below a certain height
 				gameOverText.text = "Game Over!";
-				restartButton.gameObject.SetActive(true);
+				restartButton.gameObject.SetActive (true);
 			}
 			float moveHorizontal = Input.GetAxis ("Horizontal");
 			float moveVertical = Input.GetAxis ("Vertical");
@@ -113,6 +112,9 @@ public class PlayerController : MonoBehaviour {
 
 			Vector3 movement = new Vector3 ((moveHorizontal + TheForceTranslationX + horizontal), 0.0f, (moveVertical + forward));
 			rb.AddForce (movement * speed);
+		} else {
+			if (blink > 0)
+				useAlpha = !useAlpha;
 		}
 
 		if (won) { // updates the pin count after winning
