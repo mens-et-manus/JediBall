@@ -60,10 +60,10 @@ public class OSCConnection : MonoBehaviour{
 		}
 
 		if (msgAddress == "/muse/elements/is_good") {
-			float conn0 = (float)oscMessage.Values[0];
-			float conn1 = (float)oscMessage.Values[1];
-			float conn2 = (float)oscMessage.Values[2];
-			float conn3 = (float)oscMessage.Values[3];
+			int conn0 = (int)oscMessage.Values[0];
+			int conn1 = (int)oscMessage.Values[1];
+			int conn2 = (int)oscMessage.Values[2];
+			int conn3 = (int)oscMessage.Values[3];
 			conn = conn0 + conn1 + conn2 + conn3;
 		}
     }
