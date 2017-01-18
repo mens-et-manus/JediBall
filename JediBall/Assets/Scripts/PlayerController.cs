@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 
 	public Text gameOverText;
 
-	public Text startText, alphaText, betaText, connectionText;
+	public Text startText, alphaText, betaText, connectionText, lrText;
 
 	public Button restartButton;
 
@@ -214,5 +214,10 @@ public class PlayerController : MonoBehaviour {
 	public void toggleLRControls()
 	{
 		alphaBetaForLR = !alphaBetaForLR;
+		if (alphaBetaForLR) {
+			lrText.text = "Using\nTilt+Brain";
+		} else {
+			lrText.text = "Using\nTilt Only";
+		}
 	}
 }
