@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 
 	public Image leftArrow, rightArrow;
 
+	public float brainControlThreshold = 0.2f;
+
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -114,19 +116,19 @@ public class PlayerController : MonoBehaviour {
 					rightArrow.enabled = false;
 				}
 			} else {
-				if (horizontal > 100 && useAlpha && alpha_forward > 0.3f) {
+				if (horizontal > 100 && useAlpha && alpha_forward > brainControlThreshold) {
 					horizontal = 1 * alpha_forward;
 					rightArrow.enabled = true;
 					leftArrow.enabled = false;
-				} else if (horizontal > 100 && !useAlpha && beta_forward > 0.3f) {
+				} else if (horizontal > 100 && !useAlpha && beta_forward > brainControlThreshold) {
 					horizontal = 1 * beta_forward;
 					rightArrow.enabled = true;
 					leftArrow.enabled = false;
-				} else if (horizontal < -100 && useAlpha && alpha_forward > 0.3f) {
+				} else if (horizontal < -100 && useAlpha && alpha_forward > brainControlThreshold) {
 					horizontal = -1 * alpha_forward;
 					rightArrow.enabled = false;
 					leftArrow.enabled = true;
-				} else if (horizontal < -100 && !useAlpha && beta_forward > 0.3f) {
+				} else if (horizontal < -100 && !useAlpha && beta_forward > brainControlThreshold) {
 					horizontal = -1 * beta_forward;
 					rightArrow.enabled = false;
 					leftArrow.enabled = true;
