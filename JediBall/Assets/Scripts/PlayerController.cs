@@ -200,11 +200,11 @@ public class PlayerController : MonoBehaviour {
 	void changeConnectionText(float connection)
 	{
 		if (connection > 2)
-			connectionText.text = "Connection Status: Good";
+			connectionText.text = "Connection: Good";
 		else if (connection == 2)
-			connectionText.text = "Connection Status: OK";
+			connectionText.text = "Connection: OK";
 		else
-			connectionText.text = "Connection Status: Bad";
+			connectionText.text = "Connection: Bad";
 	}
 
 	// changes alpha and beta text
