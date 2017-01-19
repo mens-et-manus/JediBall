@@ -233,11 +233,14 @@ public class PlayerController : MonoBehaviour {
 
 	// hit animation
 	void OnCollisionEnter(Collision other) {
-		if (other.relativeVelocity.magnitude > 0.1f) {
+		float velocityThreshold = 10f;
+		float velocity = other.relativeVelocity.magnitude;
+		if (velocity > velocityThreshold) {
 			// Hit Pin
 			if (other.gameObject.CompareTag ("Pin")) { 
 				// sound here
-				audioSource.PlayOneShot(PinSound, 0.7f);
+				float volume = 1f / (1f+Mathf.Exp(-(velocity-velocityThreshold)/50f)); // sigmoid volume: 0.7f
+				audioSource.PlayOneShot(PinSound, volume);
 				// particle hear
 				Instantiate (PinParticle, other.contacts [0].point, Quaternion.Euler (-90, 0, 0));
 				Destroy (PinParticle, 3f);
