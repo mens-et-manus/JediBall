@@ -2,9 +2,14 @@
 using System.Collections;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(OSCConnection))]
 public class PlayerController : MonoBehaviour {
 	public GameObject PinParticle; // hit effect 
-	//public AudioSource PinSound; // hit sound
+	public AudioClip PinSound; // hit sound
+
+	private AudioSource audioSource; // audio source component
 
 	public GameObject Pins; // Pins object for scoring
 
@@ -42,8 +47,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start ()
 	{
-		//PinSound = GetComponent<AudioSource>();
-
+		audioSource = GetComponent<AudioSource> ();
 		rb = GetComponent<Rigidbody>();
 		startText.text = "Welcome to JediBall!";
 		gameOverText.text = "";
@@ -229,23 +233,25 @@ public class PlayerController : MonoBehaviour {
 
 	// hit animation
 	void OnCollisionEnter(Collision other) {
-		if (other.relativeVelocity.magnitude > 1f) {
+		if (other.relativeVelocity.magnitude > 0.1f) {
 			// Hit Pin
 			if (other.gameObject.CompareTag ("Pin")) { 
 				// sound here
-				//PinSound.Play();
+				audioSource.PlayOneShot(PinSound, 0.7f);
 				// particle hear
 				Instantiate (PinParticle, other.contacts [0].point, Quaternion.Euler (-90, 0, 0));
 				Destroy (PinParticle, 3f);
 			} 
 			// Hit Obstacles
+			/*
 			if (other.gameObject.CompareTag ("Obstacle")) { 
 				// sound here
-				//PinSound.Play();
+				PinSound.Play();
 				// particle hear
 				Instantiate (PinParticle, other.contacts [0].point, Quaternion.Euler (-90, 0, 0));
 				Destroy (PinParticle, 3f);
 			} 
+			*/
 		}
 	}
 
