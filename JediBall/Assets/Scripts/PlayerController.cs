@@ -102,8 +102,7 @@ public class PlayerController : MonoBehaviour {
 		changeConnectionText (connection);
 		if (active) {
 			if (rb.position.y <= -5.0 && !won) { // game over if ball falls below a certain height
-				gameOverText.text = "Game Over!";
-				restartButton.gameObject.SetActive (true);
+				win();
 			}
 			float moveHorizontal = Input.GetAxis ("Horizontal");
 			float moveVertical = Input.GetAxis ("Vertical");

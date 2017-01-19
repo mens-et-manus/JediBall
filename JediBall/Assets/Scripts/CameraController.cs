@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour {
 
 	void Start ()
 	{
+		gameObject.transform.position = new Vector3(player.transform.position.x,3f,-26f);
 		offset = transform.position - player.transform.position;
 	}
 
