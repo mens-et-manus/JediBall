@@ -241,8 +241,8 @@ public class PlayerController : MonoBehaviour {
 				float volume = 1f / (1f+Mathf.Exp(-(velocity-velocityThreshold)/50f)); // sigmoid volume: 0.7f
 				audioSource.PlayOneShot(PinSound, volume);
 				// particle hear
-				Instantiate (PinParticle, other.contacts [0].point, Quaternion.Euler (-90, 0, 0));
-				Destroy (PinParticle, 3f);
+				var pinParticleClone = Instantiate (PinParticle, other.contacts [0].point, Quaternion.Euler (-90, 0, 0));
+				Destroy (pinParticleClone, 3f);
 			} 
 			// Hit Obstacles
 			/*
