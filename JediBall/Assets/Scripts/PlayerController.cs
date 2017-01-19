@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
+	public GameObject PinParticle; // hit effect 
+	//public AudioSource PinSound; // hit sound
 
 	public GameObject Pins; // Pins object for scoring
 
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour {
 
 	void Start ()
 	{
+		//PinSound = GetComponent<AudioSource>();
+
 		rb = GetComponent<Rigidbody>();
 		startText.text = "Welcome to JediBall!";
 		gameOverText.text = "";
@@ -222,4 +226,27 @@ public class PlayerController : MonoBehaviour {
 			lrText.text = "Using\nTilt Only";
 		}
 	}
+
+	// hit animation
+	void OnCollisionEnter(Collision other) {
+		if (other.relativeVelocity.magnitude > 1f) {
+			// Hit Pin
+			if (other.gameObject.CompareTag ("Pin")) { 
+				// sound here
+				//PinSound.Play();
+				// particle hear
+				Instantiate (PinParticle, other.contacts [0].point, Quaternion.Euler (-90, 0, 0));
+				Destroy (PinParticle, 3f);
+			} 
+			// Hit Obstacles
+			if (other.gameObject.CompareTag ("Obstacle")) { 
+				// sound here
+				//PinSound.Play();
+				// particle hear
+				Instantiate (PinParticle, other.contacts [0].point, Quaternion.Euler (-90, 0, 0));
+				Destroy (PinParticle, 3f);
+			} 
+		}
+	}
+
 }
