@@ -191,11 +191,9 @@ public class PlayerController : MonoBehaviour {
 		rb.Sleep ();
 		gameObject.transform.position = new Vector3 (Random.Range(-2,2),0.5f,-24f);
 
-		RandomPosition obs = obstacles.GetComponentInChildren<RandomPosition> ();
-		obs.restart ();
+		obstacles.GetComponent<ObstacleControl> ().reinitAllChildren ();
 
-		PickUpScript pus = pickups.GetComponentInChildren<PickUpScript> ();
-		pus.restart ();
+		pickups.GetComponent<PickUpControl> ().reinitAllChildren ();
 
 //		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex); 
     }
