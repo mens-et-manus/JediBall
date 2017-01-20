@@ -40,6 +40,10 @@ public class RandomPosition : MonoBehaviour {
 			Vector3 rot = new Vector3 (x, y, z);
 			transform.Rotate(rot * Time.deltaTime * speed);
 		}
+
+		if (Input.GetKey(KeyCode.R)){
+			Start();
+		}
 	}
 	
 }

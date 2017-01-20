@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		startText.text = "Welcome to JediBall!";
 		gameOverText.text = "";
+		startButton.gameObject.SetActive (true);
+		won = false;
+		active = false;
 		restartButton.gameObject.SetActive (false);
 		leftArrow.enabled = false;
 		rightArrow.enabled = false;
@@ -149,6 +152,10 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKey (KeyCode.Escape)) { // quit application when ESC typed
 			Application.Quit ();
 		}
+
+		if (Input.GetKey (KeyCode.R)) {
+			Restart ();
+		}
 	}
 		
 	void OnTriggerEnter(Collider other) 
@@ -166,7 +173,14 @@ public class PlayerController : MonoBehaviour {
 	// restarts level
     public void Restart()
     {
-		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex); 
+		Start ();
+//		Pins.GetComponent<PinController>().Reset (); // Reset Pins
+		Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
+		rb.Sleep ();
+		gameObject.transform.position = new Vector3 (Random.Range(-2,2),0.5f,-24f);
+//		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex); 
     }
 
 	void onGUI()
