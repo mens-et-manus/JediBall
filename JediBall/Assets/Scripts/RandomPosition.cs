@@ -15,6 +15,8 @@ public class RandomPosition : MonoBehaviour {
 	public bool zRot = false;
 
 	public float speed = 0f;
+	private float speedMux; // speed multiplier
+	private Vector3 rot;
 
 	// Use this for initialization
 	void Start () {
@@ -24,19 +26,11 @@ public class RandomPosition : MonoBehaviour {
 	void Update() {
 		if (speed > 0f) { // rotating over time
 			// rotation
-			float x = (xRot) ? 15f : 0f;
-			float y = (yRot) ? 30f : 0f;
-			float z = (zRot) ? 45f : 0f;
-			Vector3 rot = new Vector3 (x, y, z);
-			transform.Rotate(rot * Time.deltaTime * speed);
-		}
-
-		if (Input.GetKey(KeyCode.R)){
-			Start();
+			transform.Rotate(rot * Time.deltaTime * speed * speedMux);
 		}
 	}
 
-	public void restart() {
+	public void restart(){
 		// position
 		float x = Random.Range (xMin, xMax);
 		float y = Random.Range (yMin, yMax);
@@ -47,5 +41,11 @@ public class RandomPosition : MonoBehaviour {
 		x = (xRot) ? Random.Range (0f, 180f) : 0f;
 		y = (yRot) ? Random.Range (0f, 180f) : 0f;
 		z = (zRot) ? Random.Range (0f, 180f) : 0f;
-		gameObject.transform.rotation = Quaternion.Euler(x,y,z);	}
+		gameObject.transform.rotation = Quaternion.Euler(x,y,z);
+
+		// rotation vector for moving
+		rot = new Vector3(x,y,z);
+		speedMux = Random.Range (0.1f, 3f);
+	}
+	
 }
