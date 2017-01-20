@@ -6,18 +6,21 @@ using UnityEngine;
 public class GoalCameraControl : MonoBehaviour {
 
 	public GameObject player;
-	private Camera camera;
+	public float zThreshold = 17f;
+	public float yThreshold = -5f;
+
+	private Camera cam;
 
 	// Use this for initialization
 	void Start () {
-		camera = gameObject.GetComponent<Camera>();
-		camera.enabled = false;
+		cam = gameObject.GetComponent<Camera>();
+		cam.enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (player.transform.position.z > 18f || player.transform.position.y <= -5.0f) {
-			camera.enabled = true;
+		if (player.transform.position.z > zThreshold || player.transform.position.y <= yThreshold) {
+			cam.enabled = true;
 		}
 	}
 }

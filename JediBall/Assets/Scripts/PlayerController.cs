@@ -49,26 +49,13 @@ public class PlayerController : MonoBehaviour {
 		rightArrow.enabled = false;
 
 		TheForceTranslationX = kinectObject.GetComponent<Rigidbody> ().transform.position.x;
-	}
-
-	// count how many pins are down
-	public int CheckPins()
-	{
-		int nStand = 0;
-		//See https://docs.unity3d.com/ScriptReference/Transform.html
-		foreach (Transform child in Pins.transform) {
-			//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
-			if (Mathf.Abs (Vector3.Dot (child.up, Vector3.up)) > 0.999f) {
-				nStand += 1;
-			}
-		}
-		return Pins.transform.childCount - nStand;
+		Pins.GetComponent<PinController>().Reset (); // Reset Pins
 	}
 
 	// transitions to win UI
 	public void win()
 	{
-		int nPin = CheckPins (); // count pins
+		int nPin = Pins.GetComponent<PinController>().CheckPins (); // count pins
 		startText.text = "Pins Down: " + nPin.ToString();
 		restartButton.gameObject.SetActive (true);
 		won = true;
@@ -155,7 +142,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (won) { // updates the pin count after winning
-			int nPin = CheckPins ();
+			int nPin = Pins.GetComponent<PinController>().CheckPins ();
 			startText.text = "Pins Down: " + nPin.ToString ();
 		}
 

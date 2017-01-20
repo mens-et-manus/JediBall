@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿// Toshiaki Koike-Akino, 2017 Jan.
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -30,6 +31,10 @@ public class CollisionController : MonoBehaviour {
 			}
 			// hit sound
 			if (ShockSound != null) {
+				// randomize audio pitch
+				float pitch = Random.Range (0.7f, 1.3f);
+				source.pitch = pitch;
+				// volume
 				float vol = 1f - Mathf.Exp (-(velocity - VelocityThreshold) * VolumeSlope);
 				source.PlayOneShot (ShockSound, vol);
 			}

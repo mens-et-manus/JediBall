@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿// Toshiaki Koike-Akino, 2017 Jan.
+using System.Collections;
 using UnityEngine;
 
 public class PinController : MonoBehaviour {
 	public float scale = 1.0f; // default
+	public float sensitivity = 0.999f; // pin down detection sensitivity
 
 	// Use this for initialization
 	void Start () {
@@ -41,7 +43,7 @@ public class PinController : MonoBehaviour {
 		//See https://docs.unity3d.com/ScriptReference/Transform.html
 		foreach (Transform child in transform) {
 			//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
-			if (Vector3.Dot (child.up, Vector3.up) < 0.999f) {
+			if (Vector3.Dot (child.up, Vector3.up) < sensitivity) {
 				nDown += 1;
 			}
 		}

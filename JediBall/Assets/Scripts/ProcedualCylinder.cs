@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// Toshiaki Koike-Akino, 2017 Jan.
+using UnityEngine;
 using System.Collections;	
 
 //http://wiki.unity3d.com/index.php/ProceduralPrimitives
