@@ -6,7 +6,7 @@ using UnityEngine;
 public class GoalCameraControl : MonoBehaviour {
 
 	public GameObject player;
-	public float zThreshold = 17f;
+	public float zThreshold = 16f;
 	public float yThreshold = -5f;
 
 	private Camera cam;
