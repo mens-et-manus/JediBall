@@ -12,6 +12,30 @@ public class PinController : MonoBehaviour {
 		Reset ();
 	}
 
+	// Set Active 10 pins or extra 5 pins if true
+	public void ActivatePins(bool extra = false) {
+		int i = 0;
+		foreach (Transform child in transform) {
+			if (child.CompareTag ("Pin")) {		
+				i += 1;
+				if ((i <= 10 && !extra) || (i>10 && extra)) {
+					child.gameObject.SetActive (true);
+				}
+			}
+		}
+	}
+
+	// De-activate pins which were knocked down
+	public void DeActivateDownPins() {
+		foreach (Transform child in transform) {
+			if (child.CompareTag ("Pin")) {		
+				if (CheckDownPin(child)) {
+					child.gameObject.SetActive (false);
+				}
+			}
+		}
+	}
+
 	// Reset Pin positions: triangular (not necessarily 10 pins)
 	public void Reset () {
 		int line = 0; // line from head
@@ -41,6 +65,12 @@ public class PinController : MonoBehaviour {
 		}
 	}
 
+	// check if pin is down
+	private bool CheckDownPin(Transform pin) {
+		//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
+		return (Vector3.Dot (pin.up, Vector3.up) < sensitivity);
+	}
+
 	// count how many pins are down
 	public int CheckPins()
 	{
@@ -48,8 +78,7 @@ public class PinController : MonoBehaviour {
 		//See https://docs.unity3d.com/ScriptReference/Transform.html
 		foreach (Transform child in transform) {
 			if (child.CompareTag ("Pin")) {
-				//See http://answers.unity3d.com/questions/1003884/how-to-check-if-an-object-is-upside-down.html
-				if (Vector3.Dot (child.up, Vector3.up) < sensitivity) {
+				if (CheckDownPin(child)) {
 					nDown += 1;
 				}
 			}
