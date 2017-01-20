@@ -3,15 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomPosition : MonoBehaviour {
+	public float xMin = -2f;
+	public float xMax = 2f;
+	public float yMin = 0.5f;
+	public float yMax = 0.5f;
+	public float zMin = -20f;
+	public float zMax = 17f;
+
+	public bool xRot = false;
+	public bool yRot = true;
+	public bool zRot = false;
 
 	// Use this for initialization
 	void Start () {
-		gameObject.transform.position = new Vector3 (Random.Range(-2,2),0.5f,Random.Range(-20,17));
-		gameObject.transform.rotation = Quaternion.Euler(0,Random.Range(0,360),0);
+		// position
+		float x = Random.Range (xMin, xMax);
+		float y = Random.Range (yMin, yMax);
+		float z = Random.Range (zMin, zMax);
+		gameObject.transform.position = new Vector3 (x,y,z);
+
+		// rotation
+		x = (xRot) ? Random.Range (0f, 180f) : 0f;
+		y = (yRot) ? Random.Range (0f, 180f) : 0f;
+		z = (zRot) ? Random.Range (0f, 180f) : 0f;
+		gameObject.transform.rotation = Quaternion.Euler(x,y,z);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
