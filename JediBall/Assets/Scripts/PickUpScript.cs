@@ -38,6 +38,7 @@ public class PickUpScript : MonoBehaviour {
 	{
 		if (other.gameObject.CompareTag (tag)) { // player picks up object
 			gameObject.GetComponent<MeshRenderer>().enabled = false;
+			gameObject.GetComponent<BoxCollider> ().enabled = false;
 			player.GetComponent<PlayerController> ().pickUpScore += 1;
 			if (pickupSound != null) {
 				float pitch = Random.Range (0.7f, 1.3f);
@@ -49,6 +50,7 @@ public class PickUpScript : MonoBehaviour {
 
 	public void restart(){
 		gameObject.GetComponent<MeshRenderer>().enabled = true;
+		gameObject.GetComponent<BoxCollider> ().enabled = true;
 		// position
 		float x = Random.Range (xMin, xMax);
 		float y = Random.Range (yMin, yMax);
