@@ -14,6 +14,8 @@ public class RandomPosition : MonoBehaviour {
 	public bool yRot = true;
 	public bool zRot = false;
 
+	public float speed = 0f;
+
 	// Use this for initialization
 	void Start () {
 		// position
@@ -27,6 +29,17 @@ public class RandomPosition : MonoBehaviour {
 		y = (yRot) ? Random.Range (0f, 180f) : 0f;
 		z = (zRot) ? Random.Range (0f, 180f) : 0f;
 		gameObject.transform.rotation = Quaternion.Euler(x,y,z);
+	}
+
+	void Update() {
+		if (speed > 0f) { // rotating over time
+			// rotation
+			float x = (xRot) ? 15f : 0f;
+			float y = (yRot) ? 30f : 0f;
+			float z = (zRot) ? 45f : 0f;
+			Vector3 rot = new Vector3 (x, y, z);
+			transform.Rotate(rot * Time.deltaTime * speed);
+		}
 	}
 	
 }
