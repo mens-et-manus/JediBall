@@ -9,13 +9,17 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject player; // for retrieving values from Muse
 
+	public GameObject goalCamera; // to disable goal camera on restart
+
+	public GameObject obstacles, pickups;
+
 	public float speedMultiplier;
 
 	public float startingSpeed = 15f;
 
 	private Rigidbody rb;
 
-	public Text gameOverText;
+	public Text pickUpText;
 
 	public Text startText, alphaText, betaText, connectionText, lrText;
 
@@ -39,17 +43,20 @@ public class PlayerController : MonoBehaviour {
 
 	public float brainControlThreshold = 0.2f;
 
+	public int pickUpScore = 0;
+
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
 		startText.text = "Welcome to JediBall!";
-		gameOverText.text = "";
+		pickUpText.text = "";
 		startButton.gameObject.SetActive (true);
 		won = false;
 		active = false;
 		restartButton.gameObject.SetActive (false);
 		leftArrow.enabled = false;
 		rightArrow.enabled = false;
+		pickUpScore = 0;
 
 		TheForceTranslationX = kinectObject.GetComponent<Rigidbody> ().transform.position.x;
 		Pins.GetComponent<PinController>().Reset (); // Reset Pins
@@ -62,6 +69,7 @@ public class PlayerController : MonoBehaviour {
 		startText.text = "Pins Down: " + nPin.ToString();
 		restartButton.gameObject.SetActive (true);
 		won = true;
+		pickUpText.text = "Pick ups: " + pickUpScore;
 	}
 
 	// starts the game
@@ -147,6 +155,7 @@ public class PlayerController : MonoBehaviour {
 		if (won) { // updates the pin count after winning
 			int nPin = Pins.GetComponent<PinController>().CheckPins ();
 			startText.text = "Pins Down: " + nPin.ToString ();
+			pickUpText.text = "Pick Ups: " + pickUpScore;
 		}
 
 		if (Input.GetKey (KeyCode.Escape)) { // quit application when ESC typed
@@ -175,11 +184,19 @@ public class PlayerController : MonoBehaviour {
     {
 		Start ();
 //		Pins.GetComponent<PinController>().Reset (); // Reset Pins
+		goalCamera.GetComponent<GoalCameraControl>().disableCam();
 		Rigidbody rb = gameObject.GetComponent<Rigidbody>();
 		rb.velocity = Vector3.zero;
 		rb.angularVelocity = Vector3.zero;
 		rb.Sleep ();
 		gameObject.transform.position = new Vector3 (Random.Range(-2,2),0.5f,-24f);
+
+		RandomPosition obs = obstacles.GetComponentInChildren<RandomPosition> ();
+		obs.restart ();
+
+		PickUpScript pus = pickups.GetComponentInChildren<PickUpScript> ();
+		pus.restart ();
+
 //		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex); 
     }
 

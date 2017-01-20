@@ -18,17 +18,7 @@ public class RandomPosition : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// position
-		float x = Random.Range (xMin, xMax);
-		float y = Random.Range (yMin, yMax);
-		float z = Random.Range (zMin, zMax);
-		gameObject.transform.position = new Vector3 (x,y,z);
-
-		// rotation
-		x = (xRot) ? Random.Range (0f, 180f) : 0f;
-		y = (yRot) ? Random.Range (0f, 180f) : 0f;
-		z = (zRot) ? Random.Range (0f, 180f) : 0f;
-		gameObject.transform.rotation = Quaternion.Euler(x,y,z);
+		restart ();
 	}
 
 	void Update() {
@@ -45,5 +35,17 @@ public class RandomPosition : MonoBehaviour {
 			Start();
 		}
 	}
-	
+
+	public void restart() {
+		// position
+		float x = Random.Range (xMin, xMax);
+		float y = Random.Range (yMin, yMax);
+		float z = Random.Range (zMin, zMax);
+		gameObject.transform.position = new Vector3 (x,y,z);
+
+		// rotation
+		x = (xRot) ? Random.Range (0f, 180f) : 0f;
+		y = (yRot) ? Random.Range (0f, 180f) : 0f;
+		z = (zRot) ? Random.Range (0f, 180f) : 0f;
+		gameObject.transform.rotation = Quaternion.Euler(x,y,z);	}
 }

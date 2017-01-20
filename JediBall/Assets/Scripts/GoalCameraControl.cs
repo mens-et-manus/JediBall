@@ -23,4 +23,8 @@ public class GoalCameraControl : MonoBehaviour {
 			cam.enabled = true;
 		}
 	}
+
+	public void disableCam() {
+		cam.enabled = false;
+	}
 }
