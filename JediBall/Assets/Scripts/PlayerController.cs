@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour {
 
 	public float brainControlThreshold = 0.2f;
 
+	private GameController gameController = null;
+
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -50,6 +52,16 @@ public class PlayerController : MonoBehaviour {
 
 		TheForceTranslationX = kinectObject.GetComponent<Rigidbody> ().transform.position.x;
 		Pins.GetComponent<PinController>().Reset (); // Reset Pins
+
+		// Game controller
+		// https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/counting-points-and-displaying-score
+		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
+		if (gameControllerObject != null) {
+			gameController = gameControllerObject.GetComponent<GameController> ();
+		}
+		if (gameController == null) {
+			Debug.Log ("Cannot find 'GameController' script");
+		}
 	}
 
 	// transitions to win UI
@@ -166,6 +178,8 @@ public class PlayerController : MonoBehaviour {
 	// restarts level
     public void Restart()
     {
+		//int score = Pins.GetComponent<PinController>().CheckPins ();
+		//gameController.UpdateScore (score);
 		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex); 
     }
 
