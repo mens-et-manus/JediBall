@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 
 	public Text gameOverText;
 
-	public Text startText, alphaText, betaText, connectionText, lrText;
+	public Text startText, alphaText, betaText, connectionText, lrText, ScoreText;
 
 	public Button restartButton;
 
@@ -39,7 +39,22 @@ public class PlayerController : MonoBehaviour {
 
 	public float brainControlThreshold = 0.2f;
 
-	private GameController gameController = null;
+	private GameController gameController;
+
+	public void DisplayScores() {
+		int inning = gameController.GetInning ();
+		string str = "";
+		if (inning > 0) {
+			int[] scores = gameController.GetScores ();
+			for (int i = 0; i < inning; i++) {
+				str = string.Format ("{0} {1}", str, scores [i]);
+			}
+		} 
+		else {
+			str = string.Format ("High Score: {0}", gameController.GetHighScore ());
+		}
+		ScoreText.text = str;
+	}
 
 	void Start ()
 	{
@@ -62,6 +77,7 @@ public class PlayerController : MonoBehaviour {
 		if (gameController == null) {
 			Debug.Log ("Cannot find 'GameController' script");
 		}
+		DisplayScores ();
 	}
 
 	// transitions to win UI
@@ -178,8 +194,10 @@ public class PlayerController : MonoBehaviour {
 	// restarts level
     public void Restart()
     {
-		//int score = Pins.GetComponent<PinController>().CheckPins ();
-		//gameController.UpdateScore (score);
+		// update score
+		int score = Pins.GetComponent<PinController>().CheckPins ();
+		gameController.UpdateScore (score);
+		// reload scene
 		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex); 
     }
 

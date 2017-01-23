@@ -1,16 +1,15 @@
 ﻿// Toshiaki Koike-Akino
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
+// singleton Game Controller to be alive over scenes.
 public class GameController : MonoBehaviour {
-	public Text ScoreText;
-	private static GameController instance = null;
+	public static GameController instance = null;
 
-	public int nInnings = 5;
-	private int[] scores;
-	private int inning;
+	public int nInnings = 3;
+	private int[] scores = null;
+	private int inning = 0;
+	private int HighScore = 0;
 
 	// reset scores
 	public void Reset() {
@@ -19,7 +18,11 @@ public class GameController : MonoBehaviour {
 			scores [i] = 0; // initialized to -1 for not counting
 		}
 		inning = 0; // reset inning
-		ScoreText.text = "";
+
+		// high score
+		if (PlayerPrefs.HasKey ("HighScore")) {
+			HighScore = PlayerPrefs.GetInt ("HighScore");
+		}
 	}
 
 	// destroy this (for new game)
@@ -36,37 +39,45 @@ public class GameController : MonoBehaviour {
 			Reset ();
 		} else if (instance != this) {
 			DestroySelf ();
-		} else {
-			DisplayScore ();
+		}	
+	}
+
+	public int CalcTotalScore() {
+		int TotalScore = 0;
+		for (int i = 0; i < inning; i++) {
+			TotalScore += scores [i];
 		}
-			
+		return TotalScore;
 	}
 
 	// Update Score given new score
 	public void UpdateScore(int score) {
-		if (inning > nInnings) {
+		scores [inning++] = score;
+		if (inning >= nInnings) {
+			int TotalScore = CalcTotalScore ();
+			if (TotalScore > HighScore) { // new high score
+				HighScore = TotalScore;
+				PlayerPrefs.SetInt ("HighScore", HighScore);
+			}
 			Reset ();
 		}
-
-		scores [inning] = score;
-		inning += 1;
-
-		DisplayScore ();
 	}
 
-	// Display score
-	public void DisplayScore() {
-		int total = 0;
-		string str = "";
-		for (int i = 0; i < inning; i++) {
-			str = str + scores [i].ToString () + " ";
-			total += scores [i];
-		}
-		str = str + "= " + total.ToString ();
-		ScoreText.text = str;
+	// Get
+	public int[] GetScores() {
+		return scores;
 	}
 
-	void Update() {
-		DisplayScore ();
+	public int GetInning() {
+		return inning;
+	}
+
+	public int GetNInnings() {
+		return nInnings;
+	}
+
+	public int GetHighScore() {
+		return HighScore;
 	}
 }
+
