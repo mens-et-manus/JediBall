@@ -28,9 +28,16 @@ public class RandomPosition : MonoBehaviour {
 			// rotation
 			transform.Rotate(rot * Time.deltaTime * speed * speedMux);
 		}
+		if (Input.GetKey (KeyCode.R)) {
+			restart ();
+		}
 	}
 
 	public void restart(){
+		//gameObject.GetComponent<MeshRenderer>().enabled = true;
+		//gameObject.GetComponent<BoxCollider> ().enabled = true;
+		gameObject.SetActive (true);
+
 		// position
 		float x = Random.Range (xMin, xMax);
 		float y = Random.Range (yMin, yMax);

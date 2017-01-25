@@ -16,7 +16,8 @@ public class PickUpControl : MonoBehaviour {
 
 	public void reinitAllChildren(){
 		foreach (Transform child in transform) {
-			child.GetComponent<PickUpScript> ().restart ();
+			//child.GetComponent<PickUpScript> ().restart ();
+			child.GetComponent<RandomPosition> ().restart ();
 		}
 	}
 }

@@ -14,6 +14,8 @@ public class CollisionController : MonoBehaviour {
 	public float VolumeSlope = 0.05f; // sound volume control
 	public string TagName = "Player"; // collider tag name
 
+	public bool vanish = false; // vanish after collision
+
 	private AudioSource source;
 
 	// 
@@ -37,6 +39,14 @@ public class CollisionController : MonoBehaviour {
 		}
 	}
 
+	void RunVanish() {
+		if (vanish) { // just hide
+			//gameObject.GetComponent<MeshRenderer>().enabled = false;
+			//gameObject.GetComponent<BoxCollider> ().enabled = false;
+			gameObject.SetActive (false);
+		}
+	}
+
 	void OnCollisionEnter(Collision other) {
 		float velocity = other.relativeVelocity.magnitude;
 		if (other.gameObject.CompareTag (TagName) && velocity > VelocityThreshold) {
@@ -45,6 +55,8 @@ public class CollisionController : MonoBehaviour {
 			// hit sound: volume is velocity function
 			float vol = 1f - Mathf.Exp (-(velocity - VelocityThreshold) * VolumeSlope);
 			RunSound (vol);
+			// vanish
+			RunVanish();
 		}
 	}
 
@@ -54,6 +66,8 @@ public class CollisionController : MonoBehaviour {
 			RunParticle (transform.position);
 			// hit sound: volume is velocity function
 			RunSound (0.9f);
+			// vanish
+			RunVanish();
 		}
 	}
 
