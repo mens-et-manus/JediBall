@@ -69,6 +69,8 @@ public class PlayerController : MonoBehaviour {
 		startText.text = "Pins Down: " + nPin.ToString();
 		restartButton.gameObject.SetActive (true);
 		won = true;
+
+		pickUpScore = pickups.GetComponent<PickUpControl> ().CheckPickUps ();
 		pickUpText.text = "Pick ups: " + pickUpScore;
 	}
 

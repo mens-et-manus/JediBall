@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PickUpControl : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	// count how many pick ups is in-active
+	public int CheckPickUps() {
+		int nVanished = 0;
+		foreach (Transform child in transform) {
+			if (child.CompareTag ("PickUp") && !child.gameObject.activeSelf) {
+				nVanished += 1;
+			}
+		}
+		return nVanished;
 	}
 
 	public void reinitAllChildren(){
